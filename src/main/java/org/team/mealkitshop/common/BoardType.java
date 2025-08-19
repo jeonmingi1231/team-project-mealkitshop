@@ -1,5 +1,6 @@
 package org.team.mealkitshop.common;
 
+
 public enum BoardType {
 
     NOTICE("공지사항"),
@@ -17,5 +18,5 @@ public enum BoardType {
     public String getLabel() {
         return label;
     }
-
 }
+

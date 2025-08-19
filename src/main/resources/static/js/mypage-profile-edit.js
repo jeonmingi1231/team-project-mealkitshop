@@ -4,14 +4,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 1) 폼 제출 가로채서 완료 페이지로 이동 (백엔드 저장 없이)
     if (form) {
-        form.addEventListener('submit', function (e) {
-            e.preventDefault(); // 실제 POST 방지
-            const url =
-                form.dataset.success ||
-                form.getAttribute('data-success') ||
-                '/mypage/profile/success';
-            window.location.assign(url);
-        });
+        // form.addEventListener('submit', function (e) {
+        //     e.preventDefault(); // 실제 POST 방지
+        //     const url =
+        //         form.dataset.success ||
+        //         form.getAttribute('data-success') ||
+        //         '/mypage/profile/success';
+        //     window.location.assign(url);
+        // });
     }
 
     // 2) 휴대폰 입력 보정: 숫자/하이픈만, 최대 20자
