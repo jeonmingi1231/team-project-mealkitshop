@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
 import org.team.mealkitshop.common.BaseTimeEntity;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,7 +14,7 @@ import java.util.Set;
 @Builder // 빌더 패턴 세터 대신 활용
 @AllArgsConstructor // 모든 필드값으로 생성자 만듬
 @NoArgsConstructor // 기본생성자
-@ToString(exclude = "ImageSet") // (exclude = "ImageSet") 추가
+@ToString
 public class Board extends BaseTimeEntity { //  extends BaseEntity (날짜 관련된 jpa 연결)
 
     @Id
@@ -29,7 +30,7 @@ public class Board extends BaseTimeEntity { //  extends BaseEntity (날짜 관�
     @Column(length = 15, nullable = false)
     private String writer;              // 작성자
 
-    @Column(name = "secret_board")
+    @Column(name = "secret_board", nullable = false)
     private boolean secretBoard;        // 비밀글 여부
 
     @Column(name = "secret_password")
