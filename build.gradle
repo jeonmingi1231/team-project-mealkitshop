@@ -75,7 +75,7 @@ dependencies {
             "jakarta.persistence:jakarta.persistence-api",
             "jakarta.annotation:jakarta.annotation-api",
             "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta")
-
+    /* PR 확인하고 꼭 삭제할 것 */
 }
 
 tasks.named('test') {
