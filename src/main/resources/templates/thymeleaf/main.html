@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<head>
+    <title>메인 페이지</title>
+
+    <!-- ▼ 페이지 전용 <head> 슬롯: 레이아웃(layout1.html)에 <th:block layout:fragment="page_head">가 있어야 함 -->
+    <th:block layout:fragment="page_head">
+        <!-- [성능] 첫 배너(데스크톱용) 이미지 Preload → LCP 개선 (파일명/크기 맞게 수정하세요) -->
+        <link rel="preload" as="image" href="/img/banner/테스트배너이미지1.jpg" imagesrcset="/img/banner/desktop1@2x.jpg 2x" media="(min-width:992px)">
+        <!-- [성능] 첫 배너(모바일용) 이미지 Preload (선택) -->
+        <link rel="preload" as="image" href="/img/banner/모바일배너테스트1.jpg" imagesrcset="/img/banner/mobile1@2x.jpg 2x" media="(max-width:991.98px)">
+
+        <!-- [스타일] 인라인 스타일 제거 → 전용 CSS로 이관 -->
+        <link rel="stylesheet" th:href="@{/css/pages/home.css?v=1}">
+    </th:block>
+</head>
+
+<body>
+<!-- ▼ 본문 슬롯: 레이아웃(layout1.html)에 <main id="main" layout:fragment="content">가 있어야 함 -->
+<div layout:fragment="content">
+
+    <!-- ① 배너 슬라이드 (Swiper 마크업)
+         - [중요] 첫 슬라이드 이미지는 lazy 제거(초기 페인트 빠르게)
+         - [CLS] 가능하면 실제 이미지 크기에 맞춰 width/height 채워주세요 (아래는 예시값)
+    -->
+    <section class="main-banner">
+        <div class="swiper banner-swiper">
+            <div class="swiper-wrapper">
+
+                <!-- 슬라이드 1 (LCP 후보) -->
+                <div class="swiper-slide">
+                    <picture>
+                        <!-- 데스크톱 -->
+                        <source media="(min-width:992px)"
+                                srcset="/img/banner/테스트배너이미지1.jpg,
+                              /img/banner/desktop1@2x.jpg 2x">
+                        <!-- 모바일 -->
+                        <img class="banner-img"
+                             src="/img/banner/모바일배너테스트1.jpg"
+                             srcset="/img/banner/mobile1@2x.jpg 2x"
+                             alt="신규 가입 3,000원 쿠폰 증정"
+                             decoding="async"
+                             width="1200" height="400"> <!-- TODO: 실제 비율/크기 반영 -->
+                    </picture>
+                </div>
+
+                <!-- 슬라이드 2 (지연 로드) -->
+                <div class="swiper-slide">
+                    <picture>
+                        <source media="(min-width:992px)"
+                                srcset="/img/banner/테스트배너이미지2.jpg,
+                              /img/banner/desktop2@2x.jpg 2x">
+                        <img class="banner-img"
+                             src="/img/banner/모바일배너테스트2.jpg"
+                             srcset="/img/banner/mobile2@2x.jpg 2x"
+                             alt="여름 한정 기획전"
+                             loading="lazy"
+                             width="1200" height="400">
+                    </picture>
+                </div>
+
+                <!-- 슬라이드 3 (지연 로드) -->
+                <div class="swiper-slide">
+                    <picture>
+                        <source media="(min-width:992px)"
+                                srcset="/img/banner/테스트배너이미지3.jpg,
+                              /img/banner/desktop3@2x.jpg 2x">
+                        <img class="banner-img"
+                             src="/img/banner/모바일배너테스트3.jpg"
+                             srcset="/img/banner/mobile3@2x.jpg 2x"
+                             alt="간편식 신제품 출시"
+                             loading="lazy"
+                             width="1200" height="400">
+                    </picture>
+                </div>
+
+            </div>
+            <!-- 내비게이션 버튼 (전용 CSS에서 위치/크기 제어) -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </section>
+
+    <!-- ② 메뉴 5칸
+        - 이미지+라벨 전체를 링크로 감싸 클릭 가능
+        - 접근성: a에 aria-label 추가
+   -->
+    <section class="container-xxl py-5 text-center menu-tiles">
+        <div class="row justify-content-center">
+        <div class="col-4 col-md-2">
+                <a href="/subscription" class="d-inline-block text-decoration-none text-reset menu-link"
+                   aria-label="정기배송 바로가기">
+                    <img src="/img/테스트메뉴1.gif" class="img-fluid rounded" alt="정기배송" loading="lazy" width="200" height="200">
+                    <p class="menu-label">MENU1</p>
+                </a>
+            </div>
+
+            <div class="col-4 col-md-2">
+                <a href="/diet-plan" class="d-inline-block text-decoration-none text-reset menu-link"
+                   aria-label="정기식단 바로가기">
+                    <img src="/img/테스트메뉴2.png" class="img-fluid rounded" alt="정기식단" loading="lazy" width="200" height="200">
+                    <p class="menu-label">MENU2</p>
+                </a>
+            </div>
+
+            <div class="col-4 col-md-2">
+                <a href="/mealkit" class="d-inline-block text-decoration-none text-reset menu-link"
+                   aria-label="밀키트 25종 바로가기">
+                    <img src="/img/테스트메뉴3.png" class="img-fluid rounded" alt="밀키트 25종" loading="lazy" width="200" height="200">
+                    <p class="menu-label">MENU3</p>
+                </a>
+            </div>
+
+            <div class="col-4 col-md-2">
+                <a href="/ready-meals" class="d-inline-block text-decoration-none text-reset menu-link"
+                   aria-label="간편식 바로가기">
+                    <img src="/img/테스트메뉴4.png" class="img-fluid rounded" alt="간편식" loading="lazy" width="200" height="200">
+                    <p class="menu-label">MENU4</p>
+                </a>
+            </div>
+
+            <div class="col-4 col-md-2">
+                <a href="/event" class="d-inline-block text-decoration-none text-reset menu-link"
+                   aria-label="이벤트 바로가기">
+                    <img src="/img/테스트메뉴5.png" class="img-fluid rounded" alt="이벤트" loading="lazy" width="200" height="200">
+                    <p class="menu-label">MENU5</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ③ BEST 섹션
+         - [변경점] 하드코딩 카드 제거 → 프래그먼트로 치환
+         - [유지보수] 앵커 주석으로 블록 경계 표시(검색/교체 용이)
+         - [반응형] 4/3/2/1열 (xl/lg/sm 기준)
+    -->
+    <!-- @@BEST_SECTION_START -->
+    <section class="container-xxl py-3">
+        <h3 class="text-center fw-bold mb-4">BEST</h3>
+
+        <div class="row g-4">
+            <!-- 빈 상태 -->
+            <div class="col-12" th:if="${#lists.isEmpty(products)}">
+                <div class="text-center text-muted py-5">상품 준비 중입니다.</div>
+            </div>
+
+            <!-- 카드 반복: fragments/product-card.html 의 th:fragment="card(p)" 사용 -->
+            <div class="col-12 col-sm-6 col-lg-4 col-xl-3" th:each="p : ${products}">
+                <div th:replace="~{fragments/product-card :: card(p=${p})}"></div>
+            </div>
+        </div>
+    </section>
+    <!-- @@BEST_SECTION_END -->
+
+</div><!-- /content -->
+
+<!-- ▼ 페이지 전용 JS가 있으면 여기에(선택). 레이아웃에 <th:block layout:fragment="page_foot">가 있어야 함 -->
+<th:block layout:fragment="page_foot">
+    <!-- 지금은 전역 main.js가 Swiper를 자동 초기화하므로 별도 없음 -->
+    <!-- 필요 시: <script th:src="@{/js/home.js?v=1}" defer></script> -->
+</th:block>
+</body>
+</html>

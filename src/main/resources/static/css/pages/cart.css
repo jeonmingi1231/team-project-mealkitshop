@@ -1,0 +1,22 @@
+.checkout-steps .steps{
+    list-style:none; padding:0; margin:0; display:flex; gap:16px; flex-wrap:wrap
+}
+.checkout-steps .steps li{
+    color:#9aa1a7; font-weight:600
+}
+.checkout-steps .steps li.active{ color:#0aa37f }
+
+.cart-item{ padding-top:16px; padding-bottom:16px }
+.item-title{ font-size:1rem }
+.item-sub{ margin-top:2px }
+
+.qty-stepper{ width:130px }
+.qty-stepper .form-control{ max-width:64px }
+
+.totals .label{ color:#6c757d; font-size:.9rem }
+.totals .value{ font-size:1.25rem }
+.totals-row > div{ min-height:56px; display:flex; flex-direction:column; justify-content:center }
+
+@media (max-width: 991.98px){
+    .totals .value{ font-size:1.1rem }
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+<head>
+    <title>회원가입 완료</title>
+
+    <!-- 레이아웃이 head 확장용으로 page_head 를 쓰는 경우 -->
+    <th:block layout:fragment="page_head">
+        <link rel="stylesheet" th:href="@{/css/pages/signup-success.css}">
+        <!-- 부트스트랩 아이콘 (layout1에 이미 있다면 이 줄은 빼도 됨) -->
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+        <style>:root{--brand-teal:#00dca0}</style>
+    </th:block>
+</head>
+
+<body>
+<!-- ✨ 핵심: 레이아웃이 요구하는 프래그먼트 이름으로 감싸기 (보통 'content') -->
+<th:block layout:fragment="content">
+    <div class="signup-success-page">
+        <div class="success-wrap">
+            <div class="ico">
+                <!-- 더 센스있는 체크 아이콘 -->
+                <i class="bi bi-check2-circle"></i>
+            </div>
+
+            <h2 class="title">가입이 완료되었습니다!</h2>
+            <p class="desc">이메일로 안내를 보내드렸어요. 로그인 후 서비스를 이용해 주세요.</p>
+
+            <div class="actions">
+                <a href="/login" class="btn btn-login">로그인하러가기</a>
+                <a href="/static" class="btn btn-outline-secondary">
+                    <i class="bi bi-house-door"></i> 메인으로
+                </a>
+            </div>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

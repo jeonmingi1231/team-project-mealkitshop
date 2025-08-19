@@ -1,0 +1,20 @@
+/* BEM 패턴 */
+.product-card { border:0 }
+.product-card__name{ font-size:1rem; line-height:1.4; margin:8px 0 4px }
+.product-card__price{ font-weight:700 }
+/* ===== product-card 보강 ===== */
+.product-card__thumb{ overflow:hidden; border-radius:1rem; background:#f8f9fa; }
+.product-card__thumb img{ width:100%; height:100%; object-fit:cover; }
+
+/* 이름 2줄 말줄임 */
+.product-card__name{
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+    overflow:hidden; min-height:2.6em;
+}
+
+/* 배지 위치(좌상단/우상단) */
+.pc-badge-left{ left:0; top:0; }
+.pc-badge-right{ right:0; top:0; }
+
+/* 메타 영역 간격 */
+.product-card__meta .price{ font-weight:700; }

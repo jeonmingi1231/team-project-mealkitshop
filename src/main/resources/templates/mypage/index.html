@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}"
+      lang="ko">
+<head>
+    <title>마이페이지</title>
+
+    <th:block layout:fragment="page_head">
+        <link rel="stylesheet" th:href="@{/css/pages/mypage.css}">
+    </th:block>
+
+    <th:block layout:fragment="page_foot">
+        <script th:src="@{/js/mypage.js}" defer></script>
+    </th:block>
+</head>
+<body>
+<div layout:fragment="content"
+     class="mypage-wrap d-flex gap-4"
+     th:with="
+        name=${memberDetail != null ? memberDetail.memberName : (summary != null ? summary.memberName : '회원')},
+        grade=${memberDetail != null ? memberDetail.grade : (summary != null ? summary.grade : 'BASIC')},
+        points=${memberDetail != null && memberDetail.points != null ? memberDetail.points : (summary != null ? summary.points : 0)},
+        coupon=${couponCount != null ? couponCount : (summary != null ? summary.couponCount : 0)},
+        orders=${recentOrders != null ? recentOrders : {}}
+     ">
+
+    <!-- ✅ 분리된 사이드바 삽입: 'index'를 현재 활성 메뉴 키로 전달 -->
+    <aside th:replace="~{fragments/mypage-side :: side('index')}"></aside>
+
+    <!-- 오른쪽 콘텐츠 -->
+    <main class="content">
+        <!-- 상단 요약 카드 -->
+        <div class="summary-card">
+            <div class="summary-grid">
+                <div class="summary-col">
+                    <div class="summary-title" th:text="|${name} 회원님의|">회원 님의</div>
+                    <div>회원등급은 <strong th:text="|(${grade})|">(BASIC)</strong> 입니다.</div>
+                    <a href="#" class="badge-link mt-2">등급별 혜택보기</a>
+                </div>
+
+                <div class="summary-col text-center">
+                    <div class="summary-title">포인트</div>
+                    <div class="summary-strong">
+                        <span class="accent" th:text="${#numbers.formatInteger(points, 1, 'COMMA')}">0</span><span>원</span>
+                    </div>
+                </div>
+
+                <div class="summary-col text-center">
+                    <div class="summary-title">쿠폰</div>
+                    <div class="summary-strong">
+                        <span class="accent" th:text="${coupon}">0</span><span>장</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 최근 주문 정보 -->
+        <div class="table-wrap">
+            <div class="d-flex align-items-end justify-content-between">
+                <div>
+                    <div class="table-title">최근 주문 정보</div>
+                    <div class="table-sub">최근 30일 내에 주문하신 내역입니다.</div>
+                </div>
+                <a class="table-sub" th:href="@{/orders}">+ 더보기</a>
+            </div>
+
+            <table class="table mt-2">
+                <thead>
+                <tr>
+                    <th>날짜/주문번호</th>
+                    <th>상품명/옵션</th>
+                    <th>상품금액/수량</th>
+                    <th>주문상태</th>
+                    <th>리뷰</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#lists.isEmpty(orders)}">
+                    <td class="empty-row" colspan="5">조회내역이 없습니다.</td>
+                </tr>
+                <tr th:each="o : ${orders}">
+                    <td th:text="${#temporals.format(o.orderedAt, 'yyyy.MM.dd')} + ' / ' + ${o.orderNo}">2025.08.14 / 123456</td>
+                    <td th:text="${o.titleAndOption}">상품명 / 옵션</td>
+                    <td th:text="${o.priceAndQty}">23,000원 / 2개</td>
+                    <td th:text="${o.status}">결제완료</td>
+                    <td>
+                        <a th:if="${o.reviewable}" th:href="@{'/reviews/write/' + ${o.orderNo}}">작성</a>
+                        <span th:if="${!o.reviewable}">-</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+</body>
+</html>

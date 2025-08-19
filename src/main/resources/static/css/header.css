@@ -1,0 +1,182 @@
+/* ======================================================================
+   header.css  ⟪thin-header + sticky category bar + mega panel⟫
+   2025-08-31  — clean + vertical mega list  (refactored 2025-08-08)
+   ====================================================================== */
+
+/* 1) 공통 글꼴 --------------------------------------------------------- */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap");
+body{font-family:"Noto Sans KR","Malgun Gothic",sans-serif;background:#fff}
+
+/* 2) 변수 -------------------------------------------------------------- */
+/* DEDUPE: :root를 한 곳으로 통합(+ quick-menu 변수 포함) */
+:root{
+    --brand-teal:#00dca0;
+    --gray:#505050;
+    --light-gray:#9a9a9a;
+    --pad-x-desk:40px;  --pad-x-mob:20px;
+    --pad-y-desk:32px;  --pad-y-mob:24px;
+    --icon-desk:2rem;   --icon-mob:1.7rem;
+    --cat-gap:6rem;     /* 카테고리 간격(데스크톱) */
+    --qm-size:120px;    /* quick menu 기본 크기 */
+}
+
+/* 3) 상단 스트립 ------------------------------------------------------- */
+.top-strip{background:var(--brand-teal);height:40px;display:flex;justify-content:center;align-items:center}
+.top-msg{color:#fff;font-size:1rem;letter-spacing:.2px}
+@media(max-width:500px){.top-msg{font-size:.9rem}}
+
+/* 4) 메인 헤더 --------------------------------------------------------- */
+.main-header{background:#fff;border-bottom:1px solid #e5e5e5;padding:var(--pad-y-desk) 0}
+.navbar-brand{color:var(--brand-teal)!important;font-size:3rem;font-weight:700}
+.main-header>.container-xxl{padding:0 var(--pad-x-desk)}
+
+.util-link{font:550 1.2rem/1 "Noto Sans KR";margin-left:.7rem}
+.main-header i{color:var(--gray);font-size:1.15rem}
+.main-header .bi-person,.main-header .bi-cart{font-size:2.4rem!important;margin-left:.35rem}
+.util-link:hover,.main-header i:hover{color:#000}
+
+/* ─ 검색 박스 ─ */
+.search-box{flex:0 0 420px;max-width:420px;margin-left:42px}
+.search-box input{
+    height:60px;background:#eee;border:none;font-size:1rem;
+    border-radius:50rem 0 0 50rem!important;padding-left:.9rem}
+.search-box button{
+    height:60px;width:66px;background:#eee;border:none;
+    border-radius:0 50rem 50rem 0!important}
+.search-box i{color:var(--light-gray);font-size:1.3rem}
+@media(max-width:991.98px){
+    .search-box{flex:1 1 auto;max-width:none;margin-left:0}
+    .search-box input,.search-box button{height:40px;font-size:.9rem}
+}
+
+/* ─ 장바구니 배지 ─ */
+.cart-btn{position:relative;padding:0}
+.cart-count{position:absolute;top:-3.5px;right:-8.5px;background:var(--brand-teal);color:#fff;font-size:1.05rem;padding:4px 9px;border-radius:50rem;line-height:1}
+@media(max-width:991.98px){.cart-count{top:-5px;right:-3px}}
+
+/* 5) 카테고리 바 ------------------------------------------------------- */
+/* DEDUPE: sticky 규칙을 한 블록으로 통합 (최종 z-index=1100 유지) */
+.category-bar{
+    position:sticky !important;
+    top:0;
+    z-index:1100;
+    background:#fff;
+    border-bottom:1px solid #e5e5e5;
+}
+
+/* — 데스크톱 ≥ 992px — */
+@media(min-width:992px){
+    .category-bar>.container-xxl{
+        padding:0;                         /* side padding 제거 */
+        gap:var(--cat-gap);                /* 모든 간격 통일 */
+        justify-content:center;
+        column-gap:var(--cat-gap);
+    }
+    .cat-first{background:none;border:none;font:600 1.2rem "Noto Sans KR";color:inherit}
+    .cat-items{display:flex;column-gap:var(--cat-gap)}
+    .cat-link{font:450 1.2rem/1 "Noto Sans KR";color:var(--gray);text-decoration:none;letter-spacing:.03em}
+    .cat-link:hover{color:#000}
+}
+
+/* — 모바일 < 992px — */
+@media(max-width:991.98px){
+    .category-bar>.container-xxl{gap:2rem;justify-content:flex-start;padding:0 var(--pad-x-mob)}
+    .cat-items{max-height:0;overflow:hidden;transition:max-height .3s ease}
+    .cat-items.show{max-height:300px}
+    .cat-link{font:500 1.05rem/1 "Noto Sans KR";color:var(--gray);text-decoration:none}
+    .cat-link:hover{color:#000}
+}
+
+/* 6) 배너 -------------------------------------------------------------- */
+.main-banner{overflow:hidden}
+.banner-swiper{position:relative;width:100%;aspect-ratio:16/5;height:auto!important;max-height:480px}
+@media(min-width:992px){.banner-swiper{aspect-ratio:16/3.5!important;max-height:550px!important}}
+.banner-img{width:100%;height:100%;object-fit:cover;object-position:center}
+.banner-swiper>.swiper-button-prev,
+.banner-swiper>.swiper-button-next{position:absolute;top:50%;transform:translateY(-50%);color:#fff;opacity:.6;--swiper-navigation-size:26px;z-index:2}
+.banner-swiper>.swiper-button-prev:hover,
+.banner-swiper>.swiper-button-next:hover{opacity:1}
+
+/* 7) 로고 -------------------------------------------------------------- */
+.logo-img{height:60px;width:auto;object-fit:contain}
+@media(max-width:991.98px){.logo-img{height:32px}}
+
+/* 8) 메가–패널 --------------------------------------------------------- */
+.mega-panel{overflow:hidden;max-height:0;opacity:0;background:#fff;border-bottom:1px solid #e5e5e5;box-shadow:0 4px 10px rgba(0 0 0 /.06);transition:max-height .45s ease,opacity .45s ease}
+.mega-panel.open{max-height:650px;opacity:1}
+
+.mega-title{text-align:center;font:600 1.05rem/1 "Noto Sans KR";padding-bottom:.5rem;margin-bottom:.8rem;border-bottom:1px solid #e5e5e5;color:var(--brand-teal)}
+
+/* DEDUPE: mega-list 규칙 합침(정렬 포함) */
+.mega-list{list-style:none;padding:0;margin:0;text-align:center}
+.mega-list li{margin-bottom:.25rem}
+.mega-list a{color:var(--gray);font-size:.9rem;text-decoration:none}
+.mega-list a:hover{color:#000}
+
+/* — 메가-패널 열 간격/정렬 — */
+@media(min-width:992px){
+    .mega-panel .container-xxl{padding:0}              /* side padding 제거 */
+    .mega-panel .row{--bs-gutter-x:var(--cat-gap)}      /* 동일 gap */
+    .mega-panel .col-6{flex:0 0 auto;width:auto}
+}
+.mega-panel .row{justify-content:center}
+
+/* 9) 기타 -------------------------------------------------------------- */
+body.has-fixed-cat{padding-top:72px}
+
+/* DEDUPE: 드롭다운 메뉴 규칙을 한 곳으로(우선순위 유지 위해 !important 포함) */
+.main-header .dropdown-menu{
+    z-index:1150 !important;  /* cat-bar(1100)보다 높게 */
+    margin-top:0 !important;
+}
+@media(hover:hover){.navbar-nav .dropdown:hover>.dropdown-menu{display:block}}
+.main-header .dropdown{position:relative}             /* 기준점 */
+.main-header .dropdown::after{                        /* 브리지존 */
+    content:''; position:absolute; left:0; right:0;
+    top:100%; height:8px;                               /* 완충대 8px */
+}
+
+/* 고정 모드(스크립트에서 .fixed 토글) */
+.category-bar.fixed{
+    position:fixed !important;
+    top:0; left:0; right:0;
+    z-index:1100;              /* 헤더·배너 위 */
+}
+
+/* ===== 배너 밑 5 개 퀵 메뉴 ===== */
+.quick-menu .menu-link img{
+    width:var(--qm-size) !important;
+    height:var(--qm-size) !important;
+    object-fit:cover;
+}
+.quick-menu .menu-label{
+    margin-top:.6rem;
+    font-size:clamp(1rem,1.4vw,1.25rem);
+    font-weight:600;
+}
+@media (min-width:992px){ :root{ --qm-size:140px; } }  /* 데스크톱만 살짝 확대 */
+
+/* === 헤더 검색창 고정 사이즈 (페이지 전용 CSS가 전역을 덮어도 보호) === */
+.main-header .search-box .form-control.header-search-input{
+    height: 40px;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.2;
+    border-radius: 8px;
+}
+
+.main-header .search-box .btn.header-search-btn{
+    height: 40px;
+    padding: .375rem .75rem;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-header .search-box .bi-search{ font-size: 1.1rem; }
+
+@media (max-width: 992px){
+    .main-header .search-box .form-control.header-search-input,
+    .main-header .search-box .btn.header-search-btn{ height:38px; }
+}
